@@ -104,16 +104,11 @@ def insertar_juego(conexion, tit_juego, plataforma, f_publicacion):
         print("El usuario ya existe...")
         return None
 
-def insertar_mensaje(conexion, f_mensaje, mensaje, juego, plataforma, usuario, red_social):
-    id_juego = buscar_juego(conexion, juego, plataforma)
-    id_usuario = buscar_usuario(conexion,usuario)
-    id_red_social = buscar_red_social(conexion,red_social)
-    if (id_usuario is not None) and ( id_red_social is not None) and (id_juego is not None):
+def insertar_mensaje(conexion, f_mensaje, mensaje, id_juego, id_usuario, id_red_social):
         query = "INSERT INTO mensaje (f_mensaje, text_mensaje,id_juego, id_usuario,id_red_social) VALUES (?,?,?,?,?)"
         datos = (f_mensaje,mensaje,id_juego, id_usuario,id_red_social)
         insertar = conexion.cursor()
         insertar.execute(query, datos)
         conexion.commit()
         return insertar.lastrowid
-    else:
-        print("Los datos  de usuario, juego o red social  no son correctos...")
+
