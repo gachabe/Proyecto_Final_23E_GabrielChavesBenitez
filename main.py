@@ -2,6 +2,8 @@
 
 from cargar_datos import cargar_datos_bbdd as bbdd
 from procesar_mensajes import procesar_mensajes_metacritic as meta
+from procesar_mensajes import procesar_mensajes_playstore as play
+from obtener_datos import consultar_datos as consulta
 conexion = bbdd.conexion_bbdd("bbdd/videojuegos.db")
 """
 id_red_social = bbdd.buscar_red_social(conexion, "Playstore")
@@ -11,4 +13,6 @@ id_red_social = bbdd.insertar_red_social(conexion,"Twitter","Twitter.com")
 print("Rdo social  nueva: ", id_red_social)
 """
 
-meta.cargar_comentario_metacritic(conexion,"The Legend of Zelda: Ocarina of Time","Nintendo64")
+#meta.cargar_comentario_metacritic(conexion,"The Legend of Zelda: Ocarina of Time","Nintendo64")
+#play.cargar_comentario_playstore(conexion)
+consulta.consultar_comentarios_fecha(conexion)

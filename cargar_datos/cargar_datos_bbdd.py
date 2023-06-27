@@ -49,9 +49,9 @@ def insertar_red_social(conexion, nom_red_social, url_red_social):
 
 
 
-def buscar_usuario(conexion,nom_usuario):
+def buscar_usuario(conexion,nick_usuario):
     cursor = conexion.cursor()
-    query ="SELECT id_usuario FROM usuario WHERE nom_usuario = '{}'".format(nom_usuario)
+    query ='SELECT id_usuario FROM usuario WHERE nick_usuario = "{}"'.format(nick_usuario)
     cursor.execute(query)
     res = cursor.fetchone()
     if res is None:
