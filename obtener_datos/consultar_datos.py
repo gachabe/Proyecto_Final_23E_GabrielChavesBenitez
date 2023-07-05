@@ -1,5 +1,4 @@
 import pandas as pd
-import seaborn as sb
 import matplotlib.pyplot as plt
 
 
@@ -36,10 +35,23 @@ def consultar_comentarios_fecha_media(conexion,f_inicio,f_fin):
             "AND f_mensaje <= DATE('{}') ".format(f_inicio, f_fin)
     df = pd.read_sql_query(query, conexion)
     df["f_mensaje"] = pd.to_datetime(df["f_mensaje"])
-    df["dia"] = df["f_mensaje"].dt.day
-    df = df.loc[:, ["nom_red_social", "f_mensaje"]]
-    m_dia = df.groupby(["nom_red_social", "f_mensaje"])["f_mensaje"].count().reset_index(name='Mensajes')
+    df["dia"] = df["f_mensaje"].dt.date
+    df = df.loc[:, ["nom_red_social", "dia"]]
+    m_dia = df.groupby(["nom_red_social", "dia"])["dia"].count().reset_index(name='Mensajes')
+    total_mensajes = m_dia["Mensajes"].sum()
+    m_dia['media_mensajes'] = m_dia['Mensajes']/total_mensajes
     print(m_dia)
+    m_dia.plot(x='dia', y="media_mensajes", kind='bar', figsize=(12, 8))
+    plt.xticks(rotation=30)
+    plt.xlabel('Días')
+    plt.ylabel('Media')
+    plt.title('Media de mensajes por día')
+    plt.show()
+
+
+
+
+
 
 
 

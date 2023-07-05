@@ -18,5 +18,5 @@ print("Rdo social  nueva: ", id_red_social)
 #consulta.consultar_comentarios_fecha(conexion)
 #meta.cargar_videojuegos_metacritic(conexion)
 #consulta.consultar_comentarios_fecha(conexion, "Zelda","2023-07-05","2023-07-05")
-bbdd.insertar_mensaje(conexion, "2023-07-06", "prueba", 1, 1000, 1)
+
 consulta.consultar_comentarios_fecha_media(conexion, "2023-07-05", "2023-07-06")
