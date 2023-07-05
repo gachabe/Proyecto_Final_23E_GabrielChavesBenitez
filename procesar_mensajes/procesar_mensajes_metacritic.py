@@ -6,7 +6,7 @@ def cargar_videojuegos_metacritic(conexion):
     df_juegos = pd.read_csv("datos/metacritic_game_info.csv", header=0,index_col = 0,
                             names = ['tit_juego', 'f_publicacion', 'Publisher', 'Genre',
                                      'plataforma', 'PMetascore', 'Avg', 'NoPlayers'])
-    df_juegos = df_juegos.loc[:20,["tit_juego","plataforma", "f_publicacion"]]
+    df_juegos = df_juegos.loc[:,["tit_juego","plataforma", "f_publicacion"]]
     df_juegos.to_sql(name="juegos", con=conexion, if_exists="append", index=False)
 
 
@@ -19,7 +19,7 @@ def cargar_comentario_metacritic(conexion, juego, plataforma):
     id_juego = bbdd.buscar_juego(conexion,juego,plataforma)
     f_actual = date.today()
     if id_juego is None:
-        id_juego = bbdd.insertar_juego(conexion,juego,plataforma,f_actual)
+        id_juego = bbdd.insertar_juego(conexion, juego, plataforma, f_actual)
 
     for fila in df_comentarios.itertuples():
         id_usuario = bbdd.buscar_usuario(conexion, fila.UserName)

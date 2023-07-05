@@ -1,11 +1,7 @@
 # Módulo para conexión y cargar inicial de los datos
 
 
-#TODO: Crear funcion buscar usuario -
-#TODO: Crear funcion buscar juego
-#TODO: Crear funcion insertar juego
-#TODO: Crear funcion insertar usuario
-#TODO: insertar comentario
+
 import sqlite3
 from sqlite3 import Error
 
