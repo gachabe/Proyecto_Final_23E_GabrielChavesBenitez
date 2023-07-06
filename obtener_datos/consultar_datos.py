@@ -1,10 +1,10 @@
 import pandas as pd
 import matplotlib.pyplot as plt
-#TODO apartado 1
+
 #TODO apartado 2
 #TODO apartado 4
 
-def consultar_comentarios_fecha(conexion, palabra_clave,f_inicio,f_fin):
+def consultar_comentarios_fecha(conexion, palabra_clave,f_inicio,f_fin): #apartado a)
     query = "SELECT nick_usuario" \
             " FROM usuario " \
             "WHERE id_usuario in " \
@@ -14,19 +14,24 @@ def consultar_comentarios_fecha(conexion, palabra_clave,f_inicio,f_fin):
             "AND f_mensaje <= DATE('{}'))".format(palabra_clave,f_inicio,f_fin)
 
     df = pd.read_sql_query(query,conexion)
+
     print(df)
 
-def consultar_comentarios_cantidad(conexion, palabra_clave):
-    query = "SELECT usuario.nick_usuario, count(mensaje.text_mensaje) as cantidad" \
+
+
+def consultar_comentarios_cantidad(conexion): #apartado
+    query = "SELECT usuario.nick_usuario, count(mensaje.text_mensaje) as cantidad " \
             "FROM mensaje " \
-            "INNER JOIN  usuario ON usuario.id_usuario = mensaje.id_usuario" \
-            "GROUP BY mensaje.id_usuario" \
-            "HAVING text_mensaje like '%{}%' " \
-            "ORDER  BY cantidad DESC ".format(palabra_clave)
+            "INNER JOIN usuario ON usuario.id_usuario = mensaje.id_usuario " \
+            "GROUP BY mensaje.id_usuario " \
+            "ORDER BY cantidad DESC"
 
     df = pd.read_sql_query(query,conexion)
+
     print(df)
-def consultar_comentarios_fecha_media(conexion,f_inicio,f_fin):
+
+
+def consultar_comentarios_fecha_media(conexion,f_inicio,f_fin):#por gusto
     """
  Aqui contaremos cuantos mensajes hay en un intervalo de tiempo y daremos la media de mensajes por dia
     """
@@ -52,7 +57,7 @@ def consultar_comentarios_fecha_media(conexion,f_inicio,f_fin):
 
 
 
-def consultar_comentarios_red_social_media(conexion,f_inicio,f_fin):
+def consultar_comentarios_red_social_media(conexion,f_inicio,f_fin): #apartado c)
     query = "SELECT red_social.nom_red_social, mensaje.text_mensaje, mensaje.f_mensaje " \
             "FROM mensaje " \
             "INNER JOIN red_social ON red_social.id_red_social = mensaje.id_red_social " \
@@ -75,3 +80,11 @@ def consultar_comentarios_red_social_media(conexion,f_inicio,f_fin):
 
 
 
+def consultar_tema_red_social(conexion,*args):
+    query1 = "SELECT red_social.nom_red_social FROM mensaje WHERE text_mensaje like '%{}%'".format(args[0])
+    query2 = ""
+    for i in range(len(args)-1):
+        query2+f" text_mensaje like '%{args[i+1]}%'"
+    query = query1+query2
+    #df = pd.read_sql_query(query, conexion)
+    print(query)
