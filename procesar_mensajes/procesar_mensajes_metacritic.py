@@ -30,6 +30,7 @@ def cargar_comentario_metacritic(conexion, juego, plataforma):
             bbdd.insertar_mensaje(conexion, f_actual, fila.Comment, id_juego, id_usuario, id_red_social)
         except Exception as error:
             print(f"Ha ocurrido un error: {error}")
+            print(f"id juego: {id_juego}, id usuario: {id_usuario},red social: {id_red_social}, mensaje: {fila.Comment}")
 
 
     print(df_comentarios)

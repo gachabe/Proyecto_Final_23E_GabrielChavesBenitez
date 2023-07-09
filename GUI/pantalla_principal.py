@@ -1,25 +1,30 @@
 from tkinter import *
 from tkinter.ttk import Combobox
+from GUI import mis_funciones as f
+
 color = 'royal blue'
 altura = 3
 anchura =21
 anchura2 = 1
 cte= 100000
 class Interfaz(Frame):
-    def __init__(self, ventana):
+    def __init__(self, ventana,conexion):
         super().__init__()
         # Inicializar la ventana con un título y colocar un frame donde almacenar los widgets
         self.ventana = ventana
         self.ventana.title("Proyecto III")
         self.frame = Frame(self.ventana, bg=color)
         self.frame.pack(side=TOP, fill=BOTH, expand=True)
+        self.conexion = conexion
 
 
 
-        boton1 = Button(self.frame,text ="Borrar BBDD",height=altura,width=anchura)
+        boton1 = Button(self.frame,text ="Borrar BBDD",height=altura,width=anchura,
+                        command=lambda :f.borrar_datos(self.conexion))
         boton1.grid(sticky="NSWE",row=0,column=0,columnspan=3,padx=(5, 5),pady=(5,0))
 
-        boton2 = Button(self.frame, text="Carga Básica",height=altura,width=anchura)
+        boton2 = Button(self.frame, text="Carga Básica",height=altura,width=anchura,
+                        command=lambda: f.carga_inicial((self.conexion)))
         boton2.grid(sticky="NSWE",row=0, column=3,columnspan=3, padx=(5, 5),pady=(5,0))
 
         boton3 = Button(self.frame, text="Ver número mensajes",height=altura,width=anchura)
@@ -73,6 +78,3 @@ class Interfaz(Frame):
         self.boton_busqueda3.grid(sticky="NSWE", row=7, column=6, columnspan=3, padx=(5, 5), pady=(5, 5))
 
 
-ventana_principal = Tk()
-calculadora = Interfaz(ventana_principal)
-ventana_principal.mainloop()

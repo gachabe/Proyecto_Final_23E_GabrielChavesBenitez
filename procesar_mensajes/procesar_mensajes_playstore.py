@@ -15,7 +15,7 @@ def cargar_comentario_playstore(conexion):
         if id_juego is None:
             id_juego = bbdd.insertar_juego(conexion, tit_juego, "Mobile", f_publicacion)
 
-        for i in range(800):
+        for i in range(5):
             nick_usuario = json_data[juego]["reviews"][i]["userName"]
             id_usuario = bbdd.buscar_usuario(conexion, nick_usuario)
             if id_usuario is None:
@@ -25,3 +25,4 @@ def cargar_comentario_playstore(conexion):
                 bbdd.insertar_mensaje(conexion,f_actual,mensaje,id_juego,id_usuario,id_red_social)
             except Exception as error:
                 print(f"Ha ocurrido un error: {error}")
+                print(f"id juego: {id_juego}, id usuario: {id_usuario},red social: {id_red_social}, mensaje: {mensaje}")
