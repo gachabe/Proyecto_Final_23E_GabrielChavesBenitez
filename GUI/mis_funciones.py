@@ -36,3 +36,5 @@ def borrar_datos(conexion):
         return "Datos limpiados correctamente"
     except Exception as e:
         print("Hubo un error imprevisto:", str(e))
+
+

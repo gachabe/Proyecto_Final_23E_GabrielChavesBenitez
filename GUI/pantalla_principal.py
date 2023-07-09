@@ -1,7 +1,9 @@
 from tkinter import *
 from tkinter.ttk import Combobox
 from GUI import mis_funciones as f
-
+from pandastable import Table
+from obtener_datos import consultar_datos as consulta
+from procesar_mensajes import procesar_mensajes_metacritic as meta
 color = 'royal blue'
 altura = 3
 anchura =21
@@ -27,16 +29,19 @@ class Interfaz(Frame):
                         command=lambda: f.carga_inicial((self.conexion)))
         boton2.grid(sticky="NSWE",row=0, column=3,columnspan=3, padx=(5, 5),pady=(5,0))
 
-        boton3 = Button(self.frame, text="Ver número mensajes",height=altura,width=anchura)
+        boton3 = Button(self.frame, text="Ver número mensajes",height=altura,width=anchura,
+                        command =lambda: self.mostrar_tabla_usuarios())
         boton3.grid(sticky="NSWE",row=0, column=6,columnspan=3,padx=(5, 5),pady=(5,0))
 
-        self.label1 = Label(self.frame,text="Escriba el nombre de un juego \n se buscará los cometarios en Metacritic",
+        self.label1 = Label(self.frame,text="Escriba el nombre de un juego y la plataforma separada por coma"
+                                            " \n se buscará los comentarios en Metacritic",
                        height=2, font=("Helvetica", 15), bg=color)
         self.label1.grid(sticky="NSWE", row=1, column=0, columnspan=9, padx=(0, 5))
 
         self.campo1 = Text(self.frame,height=1,font=("Helvetica", 15),width =anchura*2-cte)
         self.campo1.grid(sticky="NSWE", row=2, column=0, columnspan=6, padx=(10, 5),pady=(5,0))
-        self.boton_busqueda1 = Button(self.frame,text="Buscar",height=1,width=anchura)
+        self.boton_busqueda1 = Button(self.frame,text="Buscar",height=1,width=anchura,
+                                command=lambda : self.cargar_juego_meta(conexion))
         self.boton_busqueda1.grid(sticky="NSWE",row=2, column=6,columnspan=3,padx=(5, 5),pady=(5,0))
 
         self.label2 = Label(self.frame, text="Escriba dos fechas y una palabra\n"
@@ -76,5 +81,30 @@ class Interfaz(Frame):
         self.campo3.grid(sticky="NSWE", row=7, column=0, columnspan=6, padx=(10, 5), pady=(5, 5))
         self.boton_busqueda3 = Button(self.frame, text="Buscar", height=1, width=anchura)
         self.boton_busqueda3.grid(sticky="NSWE", row=7, column=6, columnspan=3, padx=(5, 5), pady=(5, 5))
+
+    def mostrar_tabla_usuarios(self):
+        df = consulta.consultar_comentarios_cantidad(self.conexion)
+        newWindow = Toplevel()
+        newWindow.title("Nueva ventana")
+        newWindow.geometry("800x800")
+
+        self.table = Table(newWindow, dataframe=df, showtoolbar=True, showstatusbar=True)
+        self.table.show()
+        return
+    def cargar_juego_meta(self,conexion):
+        juego = self.campo1.get("1.0","end-1c").split(",")[0] #Al ser un tipo Text añade un espacio al final
+        plataforma = self.campo1.get("1.0", "end-1c").split(",")[1].lstrip()
+        if juego == "":
+            print("Escribe un juego")
+        else:
+            try:
+                print(juego)
+                print(plataforma)
+                df = meta.cargar_comentario_metacritic(conexion,juego,plataforma)
+
+
+            except Exception as e:
+                print("Hubo un error imprevisto:", str(e))
+
 
 
