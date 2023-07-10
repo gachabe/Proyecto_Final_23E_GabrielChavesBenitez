@@ -4,6 +4,8 @@ from GUI import mis_funciones as f
 from pandastable import Table
 from obtener_datos import consultar_datos as consulta
 from procesar_mensajes import procesar_mensajes_metacritic as meta
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+import matplotlib as plt
 color = 'royal blue'
 altura = 3
 anchura =21
@@ -70,7 +72,8 @@ class Interfaz(Frame):
 
         self.campo2 = Text(self.frame, height=1, font=("Helvetica", 15), width=anchura * 2-cte)
         self.campo2.grid(sticky="NSWE", row=5, column=0, columnspan=6, padx=(10, 5), pady=(5, 0))
-        self.boton_busqueda2 = Button(self.frame, text="Buscar", height=1, width=anchura)
+        self.boton_busqueda2 = Button(self.frame, text="Buscar", height=1, width=anchura,
+                                      command= lambda : self.buscar_comentarios_fecha(self.conexion))
         self.boton_busqueda2.grid(sticky="NSWE", row=5 ,column=6, columnspan=3, padx=(5, 5), pady=(5, 0))
 
         self.label3 = Label(self.frame, text="Escriba palabras relacionadas con un tema\n"
@@ -84,6 +87,7 @@ class Interfaz(Frame):
 
     def mostrar_tabla_usuarios(self):
         df = consulta.consultar_comentarios_cantidad(self.conexion)
+        print(type(df))
         newWindow = Toplevel()
         newWindow.title("Nueva ventana")
         newWindow.geometry("800x800")
@@ -100,11 +104,37 @@ class Interfaz(Frame):
             try:
                 print(juego)
                 print(plataforma)
-                df = meta.cargar_comentario_metacritic(conexion,juego,plataforma)
+                meta.cargar_comentario_metacritic(conexion,juego,plataforma)
 
 
             except Exception as e:
                 print("Hubo un error imprevisto:", str(e))
+
+    def buscar_comentarios_fecha(self,conexion):
+
+        dia1 = self.combo_dia1.get()
+        mes1 = self.combo_mes1.get()
+        mes1 = "0"+mes1 if len(mes1) ==1 else mes1
+        year1 = self.combo_year1.get()
+        fecha1 = f"{year1}-{mes1}-{dia1}"
+
+        dia2 = self.combo_dia2.get()
+        mes2 = self.combo_mes2.get()
+        mes2 = "0" + mes2 if len(mes2) == 1 else mes2
+        year2 = self.combo_year2.get()
+        fecha2 = f"{year2}-{mes2}-{dia2}"
+
+        palabra_clave = self.campo2.get("1.0","end-1c")
+        print(f"{palabra_clave},{fecha1},{fecha2}")
+
+        df = consulta.consultar_comentarios_fecha(conexion,palabra_clave,fecha1,fecha2)
+
+        newWindow = Toplevel()
+        newWindow.title("Nueva ventana")
+        newWindow.geometry("800x800")
+
+        self.table = Table(newWindow, dataframe=df, showtoolbar=True, showstatusbar=True)
+        self.table.show()
 
 
 

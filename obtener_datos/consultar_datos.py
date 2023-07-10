@@ -10,16 +10,16 @@ def consultar_comentarios_fecha(conexion, palabra_clave,f_inicio,f_fin): #aparta
             "AND f_mensaje >=  DATE('{}')" \
             "AND f_mensaje <= DATE('{}'))".format(palabra_clave,f_inicio,f_fin)
 
-    df = pd.read_sql_query(query,conexion)
+    df = pd.read_sql_query(query, conexion)
     if not df.empty:
         print(df)
         return df
     else:
-        return("Error: No hubo coincidencia con tu búsqueda")
+        print("Hubo un error en la búsqueda")
+        return None
 
 
-
-def consultar_comentarios_cantidad(conexion): #apartado
+def consultar_comentarios_cantidad(conexion): #apartado b
     query = "SELECT usuario.nick_usuario, count(mensaje.text_mensaje) as cantidad " \
             "FROM mensaje " \
             "INNER JOIN usuario ON usuario.id_usuario = mensaje.id_usuario " \
@@ -55,6 +55,8 @@ def consultar_comentarios_fecha_media(conexion,f_inicio,f_fin):#por gusto
         plt.ylabel('Porcentaje')
         plt.title('Tanto por uno, de mensajes por día')
         plt.show()
+        return m_dia
+
     else:
         return("Error: No hubo coincidencia con tu búsqueda")
 
@@ -81,6 +83,7 @@ def consultar_comentarios_red_social_media(conexion,f_inicio,f_fin): #apartado c
         plt.ylabel('Media')
         plt.title(f'Media de mensajes por Red Social entre: {f_inicio} - {f_fin}')
         plt.show()
+        return m_red_social
     else:
         return("Error: No hubo coincidencia con tu búsqueda")
 
