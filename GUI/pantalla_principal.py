@@ -10,7 +10,7 @@ color = 'royal blue'
 altura = 3
 anchura =21
 anchura2 = 1
-cte= 100000
+cte= 0
 class Interfaz(Frame):
     def __init__(self, ventana,conexion):
         super().__init__()
@@ -86,6 +86,35 @@ class Interfaz(Frame):
                                       command=lambda :self.buscar_tema_red_social(conexion))
         self.boton_busqueda3.grid(sticky="NSWE", row=7, column=6, columnspan=3, padx=(5, 5), pady=(5, 5))
 
+        self.label4 = Label(self.frame, text="Elija un rango de fechas \n "\
+                                             "se mostrará la media de mensajes por red social",
+                            height=2, font=("Helvetica", 15), bg=color
+                            )
+        self.label4.grid(sticky="NWE", row=8, column=0, columnspan=9, padx=(5, 10))
+        self.combo_dia3 = Combobox(self.frame, state="readonly", values=[str(i) for i in range(1, 32)], width=anchura2)
+        self.combo_dia3.grid(sticky="NWE", row=9, column=0, padx=(10, 0), pady=(5, 5))
+
+        self.combo_mes3 = Combobox(self.frame, state="readonly", values=[str(i) for i in range(1, 13)], width=anchura2)
+        self.combo_mes3.grid(sticky="NWE", row=9, column=1, padx=(0, 0), pady=(5, 5))
+
+        self.combo_year3 = Combobox(self.frame, state="readonly", values=[str(i) for i in range(2000, 2026)],
+                                    width=anchura2)
+        self.combo_year3.grid(sticky="NWE", row=9, column=2, padx=(0, 5), pady=(5, 5))
+
+        self.combo_dia4 = Combobox(self.frame, state="readonly", values=[str(i) for i in range(1, 32)], width=anchura2)
+        self.combo_dia4.grid(sticky="NWE", row=9, column=3, padx=(5, 0), pady=(5, 5))
+
+        self.combo_mes4 = Combobox(self.frame, state="readonly", values=[str(i) for i in range(1, 13)], width=anchura2)
+        self.combo_mes4.grid(sticky="NWE", row=9, column=4, padx=(0, 0), pady=(5, 5))
+
+        self.combo_year4 = Combobox(self.frame, state="readonly", values=[str(i) for i in range(2000, 2026)],
+                                    width=anchura2)
+        self.combo_year4.grid(sticky="NWE", row=9, column=5, padx=(0, 5), pady=(5, 5))
+
+        self.boton_busqueda4 = Button(self.frame, text="Buscar", height=1, width=anchura,
+                                     command=lambda: self.buscar_comentarios_red_social_media(self.conexion))
+        self.boton_busqueda4.grid(sticky="NSWE", row=9, column=6, columnspan=3, padx=(5, 5), pady=(5, 5))
+
     def mostrar_tabla_usuarios(self):
         df = consulta.consultar_comentarios_cantidad(self.conexion)
         print(type(df))
@@ -151,4 +180,18 @@ class Interfaz(Frame):
 
         self.table = Table(newWindow, dataframe=df, showtoolbar=True, showstatusbar=True)
         self.table.show()
+    def buscar_comentarios_red_social_media(self,conexion):
+        dia1 = self.combo_dia3.get()
+        mes1 = self.combo_mes3.get()
+        mes1 = "0" + mes1 if len(mes1) == 1 else mes1
+        year1 = self.combo_year3.get()
+        fecha1 = f"{year1}-{mes1}-{dia1}"
+
+        dia2 = self.combo_dia4.get()
+        mes2 = self.combo_mes4.get()
+        mes2 = "0" + mes2 if len(mes2) == 1 else mes2
+        year2 = self.combo_year4.get()
+        fecha2 = f"{year2}-{mes2}-{dia2}"
+        consulta.consultar_comentarios_red_social_media(conexion,fecha1,fecha2)
+
 

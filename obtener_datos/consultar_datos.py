@@ -83,7 +83,7 @@ def consultar_comentarios_red_social_media(conexion,f_inicio,f_fin): #apartado c
         plt.ylabel('Media')
         plt.title(f'Media de mensajes por Red Social entre: {f_inicio} - {f_fin}')
         plt.show()
-        return m_red_social
+
     else:
         return("Error: No hubo coincidencia con tu búsqueda")
 
