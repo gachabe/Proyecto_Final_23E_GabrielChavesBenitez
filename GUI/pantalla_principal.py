@@ -82,7 +82,8 @@ class Interfaz(Frame):
         self.label3.grid(sticky="NWE", row=6, column=0, columnspan=9, padx=(5, 10))
         self.campo3 = Text(self.frame, height=1, font=("Helvetica", 15), width=anchura * 2 - cte)
         self.campo3.grid(sticky="NSWE", row=7, column=0, columnspan=6, padx=(10, 5), pady=(5, 5))
-        self.boton_busqueda3 = Button(self.frame, text="Buscar", height=1, width=anchura)
+        self.boton_busqueda3 = Button(self.frame, text="Buscar", height=1, width=anchura,
+                                      command=lambda :self.buscar_tema_red_social(conexion))
         self.boton_busqueda3.grid(sticky="NSWE", row=7, column=6, columnspan=3, padx=(5, 5), pady=(5, 5))
 
     def mostrar_tabla_usuarios(self):
@@ -137,4 +138,17 @@ class Interfaz(Frame):
         self.table.show()
 
 
+    def buscar_tema_red_social(self,conexion):
+        palabras = self.campo3.get('1.0',"end-1c").split(",")
+        palabras = [palabra.lstrip() for palabra in palabras]
+        print(len(palabras))
+        palabras = tuple(palabras)
+        print(palabras)
+        df = consulta.consultar_tema_red_social(conexion,palabras)
+        newWindow = Toplevel()
+        newWindow.title("Nueva ventana")
+        newWindow.geometry("800x800")
+
+        self.table = Table(newWindow, dataframe=df, showtoolbar=True, showstatusbar=True)
+        self.table.show()
 

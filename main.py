@@ -26,7 +26,7 @@ print("Rdo social  nueva: ", id_red_social)
 #consulta.consultar_comentarios_cantidad(conexion)
 #f.borrar_datos(conexion)
 #f.carga_inicial(conexion)
-
+#consulta.consultar_tema_red_social(conexion,("ads",))
 ventana_principal = Tk()
 calculadora = pp.Interfaz(ventana_principal,conexion)
 ventana_principal.mainloop()

@@ -90,12 +90,19 @@ def consultar_comentarios_red_social_media(conexion,f_inicio,f_fin): #apartado c
 
 
 def consultar_tema_red_social(conexion,*args):
-    query1 = "SELECT red_social.nom_red_social FROM mensaje INNER JOIN red_social ON red_social.id_red_social = mensaje.id_red_social "\
-                "WHERE text_mensaje like '{}'".format(args[0][0])
-    query2 = ""
-    for i in range(len(args)):
-        query2 += " AND text_mensaje like '{}'".format(args[0][i+1])
-    query = query1+query2
+    if len(args) > 1:
+        query1 = "SELECT red_social.nom_red_social FROM mensaje INNER JOIN red_social" \
+                 " ON red_social.id_red_social = mensaje.id_red_social "\
+                    "WHERE text_mensaje like '%{}%'".format(args[0][0])
+        query2 = ""
+        for i in range(len(args)):
+            query2 += " AND text_mensaje like '%{}%'".format(args[0][i+1])
+        query = query1+query2
+    else:
+        query = "SELECT red_social.nom_red_social FROM mensaje INNER JOIN red_social" \
+                " ON red_social.id_red_social = mensaje.id_red_social "\
+                    "WHERE text_mensaje like '%{}%'".format(args[0][0])
+    print(query)
     df = pd.read_sql_query(query, conexion)
     if not df.empty:
         df = df.loc[:, ["nom_red_social"]]
@@ -103,4 +110,5 @@ def consultar_tema_red_social(conexion,*args):
         print(red_social_tema)
         return(red_social_tema)
     else:
-        return("Error: No hubo coincidencia con tu búsqueda")
+        print("Hubo un error inesperado")
+        return None
