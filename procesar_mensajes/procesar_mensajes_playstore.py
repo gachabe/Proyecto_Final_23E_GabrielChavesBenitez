@@ -15,7 +15,7 @@ def cargar_comentario_playstore(conexion):
         if id_juego is None:
             id_juego = bbdd.insertar_juego(conexion, tit_juego, "Mobile", f_publicacion)
 
-        for i in range(5):
+        for i in range(800):
             nick_usuario = json_data[juego]["reviews"][i]["userName"]
             id_usuario = bbdd.buscar_usuario(conexion, nick_usuario)
             if id_usuario is None:

@@ -4,8 +4,7 @@ from GUI import mis_funciones as f
 from pandastable import Table
 from obtener_datos import consultar_datos as consulta
 from procesar_mensajes import procesar_mensajes_metacritic as meta
-from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
-import matplotlib as plt
+
 color = 'royal blue'
 altura = 3
 anchura =21
@@ -17,8 +16,9 @@ class Interfaz(Frame):
         # Inicializar la ventana con un título y colocar un frame donde almacenar los widgets
         self.ventana = ventana
         self.ventana.title("Proyecto III")
+        self.ventana.configure(bg=color)
         self.frame = Frame(self.ventana, bg=color)
-        self.frame.pack(side=TOP, fill=BOTH, expand=True)
+        self.frame.pack(anchor=CENTER, expand=True)
         self.conexion = conexion
 
 
@@ -129,7 +129,7 @@ class Interfaz(Frame):
         juego = self.campo1.get("1.0","end-1c").split(",")[0] #Al ser un tipo Text añade un espacio al final
         plataforma = self.campo1.get("1.0", "end-1c").split(",")[1].lstrip()
         if juego == "":
-            print("Escribe un juego")
+            print("Escribe al menos un juego")
         else:
             try:
                 print(juego)
