@@ -1,4 +1,4 @@
-from tkinter import *
+from tkinter import Button, Text, Label, Frame, CENTER, Toplevel
 from tkinter.ttk import Combobox
 from GUI import mis_funciones as f
 from pandastable import Table
@@ -117,7 +117,6 @@ class Interfaz(Frame):
 
     def mostrar_tabla_usuarios(self):
         df = consulta.consultar_comentarios_cantidad(self.conexion)
-        print(type(df))
         newWindow = Toplevel()
         newWindow.title("Nueva ventana")
         newWindow.geometry("800x800")
@@ -126,11 +125,17 @@ class Interfaz(Frame):
         self.table.show()
         return
     def cargar_juego_meta(self,conexion):
-        juego = self.campo1.get("1.0","end-1c").split(",")[0] #Al ser un tipo Text añade un espacio al final
-        plataforma = self.campo1.get("1.0", "end-1c").split(",")[1].lstrip()
-        if juego == "":
-            print("Escribe al menos un juego")
+        if self.campo1.get("1.0","end-1c") == "":
+            newWindow = Toplevel()
+            newWindow.title("ERROR")
+            newWindow.geometry("300x100")
+            mensaje = Label(newWindow, text= "Escribe al menos un juego y una plataforma",font=("Helvetica", 10))
+            mensaje.pack(anchor=CENTER, expand=True)
+
+
         else:
+            juego = self.campo1.get("1.0", "end-1c").split(",")[0]  # Al ser un tipo Text añade un espacio al final
+            plataforma = self.campo1.get("1.0", "end-1c").split(",")[1].lstrip()
             try:
                 print(juego)
                 print(plataforma)
@@ -160,7 +165,7 @@ class Interfaz(Frame):
         df = consulta.consultar_comentarios_fecha(conexion,palabra_clave,fecha1,fecha2)
 
         newWindow = Toplevel()
-        newWindow.title("Nueva ventana")
+        newWindow.title("Usuario")
         newWindow.geometry("800x800")
 
         self.table = Table(newWindow, dataframe=df, showtoolbar=True, showstatusbar=True)
@@ -168,18 +173,27 @@ class Interfaz(Frame):
 
 
     def buscar_tema_red_social(self,conexion):
-        palabras = self.campo3.get('1.0',"end-1c").split(",")
-        palabras = [palabra.lstrip() for palabra in palabras]
-        print(len(palabras))
-        palabras = tuple(palabras)
-        print(palabras)
-        df = consulta.consultar_tema_red_social(conexion,palabras)
-        newWindow = Toplevel()
-        newWindow.title("Nueva ventana")
-        newWindow.geometry("800x800")
+        if self.campo3.get('1.0',"end-1c") == "":
+            newWindow = Toplevel()
+            newWindow.title("ERROR")
+            newWindow.geometry("300x100")
+            mensaje = Label(newWindow, text="Escribe al menos una palabra", font=("Helvetica", 10))
+            mensaje.pack(anchor=CENTER, expand=True)
+        else:
+            try:
+                palabras = self.campo3.get('1.0',"end-1c").split(",")
+                palabras = [palabra.lstrip() for palabra in palabras]
+                palabras = tuple(palabras)
+                print(palabras)
+                df = consulta.consultar_tema_red_social(conexion,palabras)
+                newWindow = Toplevel()
+                newWindow.title("Nueva ventana")
+                newWindow.geometry("800x800")
 
-        self.table = Table(newWindow, dataframe=df, showtoolbar=True, showstatusbar=True)
-        self.table.show()
+                self.table = Table(newWindow, dataframe=df, showtoolbar=True, showstatusbar=True)
+                self.table.show()
+            except Exception as e:
+                print("Hubo un error imprevisto:", str(e))
     def buscar_comentarios_red_social_media(self,conexion):
         dia1 = self.combo_dia3.get()
         mes1 = self.combo_mes3.get()

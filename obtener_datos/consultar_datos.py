@@ -31,7 +31,7 @@ def consultar_comentarios_cantidad(conexion): #apartado b
     return df
 
 
-def consultar_comentarios_fecha_media(conexion,f_inicio,f_fin):#por gusto
+def consultar_comentarios_fecha_media(conexion,f_inicio,f_fin):
     """
  Aqui contaremos cuantos mensajes hay en un intervalo de tiempo y daremos la media de mensajes por dia
     """
