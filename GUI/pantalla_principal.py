@@ -148,12 +148,14 @@ class Interfaz(Frame):
     def buscar_comentarios_fecha(self,conexion):
 
         dia1 = self.combo_dia1.get()
+        dia1 = "0" + dia1 if len(dia1) == 1 else dia1
         mes1 = self.combo_mes1.get()
         mes1 = "0"+mes1 if len(mes1) ==1 else mes1
         year1 = self.combo_year1.get()
         fecha1 = f"{year1}-{mes1}-{dia1}"
 
         dia2 = self.combo_dia2.get()
+        dia2 = "0" + dia1 if len(dia2) == 1 else dia2
         mes2 = self.combo_mes2.get()
         mes2 = "0" + mes2 if len(mes2) == 1 else mes2
         year2 = self.combo_year2.get()
@@ -196,12 +198,14 @@ class Interfaz(Frame):
                 print("Hubo un error imprevisto:", str(e))
     def buscar_comentarios_red_social_media(self,conexion):
         dia1 = self.combo_dia3.get()
+        dia1 = "0" + dia1 if len(dia1) == 1 else dia1
         mes1 = self.combo_mes3.get()
         mes1 = "0" + mes1 if len(mes1) == 1 else mes1
         year1 = self.combo_year3.get()
         fecha1 = f"{year1}-{mes1}-{dia1}"
 
         dia2 = self.combo_dia4.get()
+        dia2 = "0" + dia1 if len(dia2) == 1 else dia2
         mes2 = self.combo_mes4.get()
         mes2 = "0" + mes2 if len(mes2) == 1 else mes2
         year2 = self.combo_year4.get()
