@@ -1,5 +1,5 @@
 import pandas as pd
-from datetime import date
+from datetime import datetime
 from cargar_datos import cargar_datos_bbdd as bbdd
 
 def cargar_videojuegos_metacritic(conexion):
@@ -17,7 +17,7 @@ def cargar_comentario_metacritic(conexion, juego, plataforma):
     ['Title','Platform','Comment','UserName']])
     id_red_social = bbdd.buscar_red_social(conexion,"Metacritic")
     id_juego = bbdd.buscar_juego(conexion,juego,plataforma)
-    f_actual = date.today()
+    f_actual = datetime.today()
     if id_juego is None:
         id_juego = bbdd.insertar_juego(conexion, juego, plataforma, f_actual)
 

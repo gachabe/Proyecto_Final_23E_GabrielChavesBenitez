@@ -5,7 +5,7 @@ from GUI import pantalla_principal as pp
 
 
 conexion = bbdd.conexion_bbdd("bbdd/videojuegos.db")
-
-ventana_principal = Tk()
-calculadora = pp.Interfaz(ventana_principal,conexion)
-ventana_principal.mainloop()
+if __name__ == "__main__":
+    ventana_principal = Tk()
+    calculadora = pp.Interfaz(ventana_principal,conexion)
+    ventana_principal.mainloop()

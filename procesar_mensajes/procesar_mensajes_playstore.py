@@ -1,13 +1,13 @@
-from datetime import date
+from datetime import datetime
 import json
 from cargar_datos import cargar_datos_bbdd as bbdd
 
 def cargar_comentario_playstore(conexion):
     with open("datos/PlayStoreGameAppInfoReview.json")as file:
         json_data = json.load(file)
-    f_actual = date.today()
+    f_actual = datetime.today()
     id_red_social = bbdd.buscar_red_social(conexion, "Playstore")
-    juegos = ["com.redantz.game.za3p","com.imcrazy.ds2"]
+    juegos = ["com.redantz.game.za3p","com.imcrazy.ds2","com.rockstargames.gtasa","com.dreamsky.DiabloLOL"]
     for juego in juegos:
         tit_juego = json_data[juego]["appInfo"]["title"]
         f_publicacion = json_data[juego]["appInfo"]["released"][-4:]
@@ -15,7 +15,7 @@ def cargar_comentario_playstore(conexion):
         if id_juego is None:
             id_juego = bbdd.insertar_juego(conexion, tit_juego, "Mobile", f_publicacion)
 
-        for i in range(800):
+        for i in range(15):
             nick_usuario = json_data[juego]["reviews"][i]["userName"]
             id_usuario = bbdd.buscar_usuario(conexion, nick_usuario)
             if id_usuario is None:

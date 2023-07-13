@@ -7,8 +7,8 @@ def consultar_comentarios_fecha(conexion, palabra_clave,f_inicio,f_fin): #aparta
             "WHERE id_usuario in " \
             "(SELECT id_usuario  FROM mensaje " \
             "WHERE text_mensaje like '%{}%' " \
-            "AND f_mensaje >=  DATE('{}')" \
-            "AND f_mensaje <= DATE('{}'))".format(palabra_clave,f_inicio,f_fin)
+            "AND DATE(f_mensaje) >=  DATE('{}')" \
+            "AND DATE(f_mensaje) <= DATE('{}'))".format(palabra_clave,f_inicio,f_fin)
 
     df = pd.read_sql_query(query, conexion)
     if not df.empty:
@@ -38,8 +38,8 @@ def consultar_comentarios_fecha_media(conexion,f_inicio,f_fin):
     query = "SELECT red_social.nom_red_social, mensaje.text_mensaje, mensaje.f_mensaje " \
             "FROM mensaje " \
             "INNER JOIN red_social ON red_social.id_red_social = mensaje.id_red_social " \
-            "WHERE f_mensaje >=  DATE('{}') " \
-            "AND f_mensaje <= DATE('{}') ".format(f_inicio, f_fin)
+            "WHERE DATE(f_mensaje) >=  DATE('{}') " \
+            "AND DATE(f_mensaje) <= DATE('{}') ".format(f_inicio, f_fin)
     df = pd.read_sql_query(query, conexion)
     if not df.empty:
         df["f_mensaje"] = pd.to_datetime(df["f_mensaje"])
@@ -66,8 +66,8 @@ def consultar_comentarios_red_social_media(conexion,f_inicio,f_fin): #apartado c
     query = "SELECT red_social.nom_red_social, mensaje.text_mensaje, mensaje.f_mensaje " \
             "FROM mensaje " \
             "INNER JOIN red_social ON red_social.id_red_social = mensaje.id_red_social " \
-            "WHERE f_mensaje >=  DATE('{}') " \
-            "AND f_mensaje <= DATE('{}') ".format(f_inicio, f_fin)
+            "WHERE DATE(f_mensaje) >=  DATE('{}') " \
+            "AND DATE(f_mensaje) <= DATE('{}') ".format(f_inicio, f_fin)
     df = pd.read_sql_query(query, conexion)
     if not df.empty:
         df["f_mensaje"] = pd.to_datetime(df["f_mensaje"])
