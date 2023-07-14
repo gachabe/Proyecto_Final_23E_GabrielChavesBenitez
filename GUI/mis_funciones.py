@@ -2,6 +2,10 @@
 
 from procesar_mensajes import procesar_mensajes_metacritic as meta
 from procesar_mensajes import procesar_mensajes_playstore as play
+"""
+Aqui crearemos funciones auxliares que se utilizarán en la interfaz y no requieren información interna de la interfaz,
+como botones pulsados
+"""
 
 def carga_inicial(conexion):
     """

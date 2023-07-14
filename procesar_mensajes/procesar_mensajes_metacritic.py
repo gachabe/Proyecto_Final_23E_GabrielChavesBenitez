@@ -1,8 +1,14 @@
 import pandas as pd
 from datetime import datetime
 from cargar_datos import cargar_datos_bbdd as bbdd
-
+"""
+Aqui creamos el módulo para cargar los comentarios y juegos desde metacritic, también usaremos el formato datetime y lo
+pasaremos a date en el query. 
+"""
 def cargar_videojuegos_metacritic(conexion):
+    """
+ Aqui cargamos todos los juegos del CSV metacritic
+    """
     df_juegos = pd.read_csv("datos/metacritic_game_info.csv", header=0,index_col = 0,
                             names = ['tit_juego', 'f_publicacion', 'Publisher', 'Genre',
                                      'plataforma', 'PMetascore', 'Avg', 'NoPlayers'])
@@ -11,6 +17,9 @@ def cargar_videojuegos_metacritic(conexion):
 
 
 def cargar_comentario_metacritic(conexion, juego, plataforma):
+    """
+Aqui dado un juego y una plataforma se añadirá los comentarios de metacritic relacionado a ambos a nuestra base de datos
+    """
     df_comentarios = pd.read_csv("datos/metacritic_game_user_comments.csv", header=0, index_col=0,
                                  names=['Title','Platform','Userscore','Comment', 'UserName'])
     df_comentarios =(df_comentarios.loc[(df_comentarios['Title'] == juego) & (df_comentarios['Platform'] == plataforma),

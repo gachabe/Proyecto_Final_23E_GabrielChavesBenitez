@@ -5,6 +5,11 @@ from pandastable import Table
 from obtener_datos import consultar_datos as consulta
 from procesar_mensajes import procesar_mensajes_metacritic as meta
 
+"""
+Aqui se ha creado, mediante programación orientada a objetos, la interfaz gráfica. También se han añadido
+varias funciones que, aunque podrían haberse definido fuera, era más sencilla su implementación aquí.
+"""
+
 color = 'royal blue'
 altura = 3
 anchura =21
